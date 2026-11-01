@@ -1,0 +1,392 @@
+/* ==========================================================================
+   ANIMATIONS.CSS · Un jardín entre recuerdos · Alma
+   Keyframes, coreografía de entrada, álbum, cofre, modal y reduced-motion.
+   Usa `translate`, `rotate` y `scale` (propiedades individuales) para no pisar
+   los `transform` de hover. No toca las animaciones de las flores.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Keyframes
+   -------------------------------------------------------------------------- */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes rise {
+  from { opacity: 0; translate: 0 22px; filter: blur(5px); }
+  to   { opacity: 1; translate: 0 0;    filter: blur(0); }
+}
+
+@keyframes title-reveal {
+  from {
+    opacity: 0;
+    letter-spacing: 0.42em;
+    filter: blur(16px) drop-shadow(0 6px 30px rgba(0, 0, 0, 0.65));
+  }
+  to {
+    opacity: 1;
+    letter-spacing: 0.14em;
+    filter: blur(0) drop-shadow(0 6px 30px rgba(0, 0, 0, 0.65));
+  }
+}
+
+@keyframes gold-sheen {
+  0%, 12%   { background-position: 0% 50%; }
+  60%, 100% { background-position: 100% 50%; }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.35; }
+  50%      { opacity: 1; }
+}
+
+@keyframes button-glow {
+  0%, 100% { filter: drop-shadow(0 0 0 rgba(213, 173, 114, 0)); }
+  50%      { filter: drop-shadow(0 0 14px rgba(213, 173, 114, 0.38)); }
+}
+
+@keyframes music-glow {
+  0%, 100% { box-shadow: 0 0 10px rgba(213, 173, 114, 0.12); }
+  50%      { box-shadow: 0 0 26px rgba(213, 173, 114, 0.38); }
+}
+
+@keyframes em-glow {
+  0%, 100% { text-shadow: 0 0 14px rgba(213, 173, 114, 0.22), 0 2px 18px rgba(0, 0, 0, 0.6); }
+  50%      { text-shadow: 0 0 28px rgba(213, 173, 114, 0.55), 0 2px 18px rgba(0, 0, 0, 0.6); }
+}
+
+@keyframes line-grow {
+  from { scale: 0 1; opacity: 0; }
+  to   { scale: 1 1; opacity: 1; }
+}
+
+@keyframes glow-breathe {
+  0%, 100% { opacity: 0.14; scale: 0.55; }
+  50%      { opacity: 0.42; scale: 0.72; }
+}
+
+@keyframes ray-spin {
+  to { rotate: 360deg; }
+}
+
+@keyframes seam-pulse {
+  0%, 100% { opacity: 0.3; }
+  50%      { opacity: 0.95; }
+}
+
+@keyframes chest-float {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 -7px; }
+}
+
+@keyframes album-open {
+  from {
+    opacity: 0;
+    transform: perspective(1400px) rotateX(12deg) translateY(36px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(1400px) rotateX(0) translateY(0) scale(1);
+  }
+}
+
+@keyframes develop {
+  from { opacity: 0; filter: sepia(1) brightness(0.35) blur(4px); }
+  to   { opacity: 1; filter: none; }
+}
+
+@keyframes page-turn {
+  0%   { opacity: 1; transform: perspective(1400px) rotateY(0) translateX(0); }
+  45%  { opacity: 0; transform: perspective(1400px) rotateY(-16deg) translateX(-14px); }
+  55%  { opacity: 0; transform: perspective(1400px) rotateY(16deg) translateX(14px); }
+  100% { opacity: 1; transform: perspective(1400px) rotateY(0) translateX(0); }
+}
+
+@keyframes letter-unfold {
+  from { opacity: 0; translate: 0 30px; clip-path: inset(0 0 100% 0); }
+  to   { opacity: 1; translate: 0 0;    clip-path: inset(-20% -5% -20% -5%); }
+}
+
+@keyframes star-spin {
+  from { opacity: 0; rotate: -90deg; scale: 0.4; }
+  to   { opacity: 1; rotate: 0deg;   scale: 1; }
+}
+
+/* --------------------------------------------------------------------------
+   Pantalla de entrada: coreografía y salida
+   -------------------------------------------------------------------------- */
+.entry {
+  transition: opacity 1.4s var(--al-ease), scale 1.8s var(--al-ease), visibility 0s linear 0s;
+}
+
+.entry[hidden] {
+  scale: 1.04;
+  transition: opacity 1.4s var(--al-ease), scale 1.8s var(--al-ease), visibility 0s linear 1.4s;
+}
+
+.entry-stars {
+  animation: fade-in 2s ease 0.3s backwards, twinkle 5s ease-in-out 2.3s infinite;
+}
+
+.entry .eyebrow {
+  animation: rise 1.4s var(--al-ease) 0.9s backwards;
+}
+
+.entry h1 {
+  animation: title-reveal 2.8s var(--al-ease) 1.2s backwards,
+             gold-sheen 9s ease-in-out 4.2s infinite;
+}
+
+.entry-sub {
+  animation: rise 1.6s var(--al-ease) 2.4s backwards;
+}
+
+#enterBtn {
+  animation: rise 1.4s var(--al-ease) 3.4s backwards,
+             button-glow 4.5s ease-in-out 5s infinite;
+}
+
+.entry-foot {
+  animation: fade-in 2s ease 4s backwards;
+}
+
+/* Barra, navegación y progreso aparecen con calma al cerrar la entrada */
+.topbar,
+.scene-nav,
+.progress {
+  transition: opacity 1.2s var(--al-ease) 0.7s, translate 1.2s var(--al-ease) 0.7s, visibility 0s linear 0s;
+}
+
+/* --------------------------------------------------------------------------
+   Música activa
+   -------------------------------------------------------------------------- */
+.music-btn.active,
+.music-btn[aria-pressed="true"] {
+  animation: music-glow 3s ease-in-out infinite;
+}
+
+/* --------------------------------------------------------------------------
+   Escenas: entrada escalonada de contenido
+   -------------------------------------------------------------------------- */
+.scene .scene-content {
+  transition: scale 1.5s var(--al-ease);
+}
+
+.scene:not(.active) .scene-content {
+  scale: 0.985;
+}
+
+.scene-content > :nth-child(1) { --d: 0.25s; }
+.scene-content > :nth-child(2) { --d: 0.45s; }
+.scene-content > :nth-child(3) { --d: 0.7s; }
+.scene-content > :nth-child(4) { --d: 0.95s; }
+.scene-content > :nth-child(5) { --d: 1.15s; }
+.scene-content > :nth-child(6) { --d: 1.3s; }
+.scene-content > :nth-child(7) { --d: 1.45s; }
+.scene-content > :nth-child(8) { --d: 1.6s; }
+
+.scene.active .scene-content > * {
+  animation: rise 1.2s var(--al-ease) var(--d, 0s) backwards;
+}
+
+.scene.active h2::after {
+  animation: line-grow 1.4s var(--al-ease) 0.9s backwards;
+}
+
+.scene.active h2 em {
+  animation: em-glow 5s ease-in-out 2s infinite;
+}
+
+.scene.active .scene-number {
+  animation: fade-in 1.6s ease 1.2s backwards;
+}
+
+/* --------------------------------------------------------------------------
+   Álbum
+   -------------------------------------------------------------------------- */
+.scene.active .wide-content > .album {
+  animation: album-open 1.5s var(--al-ease) 0.9s backwards;
+}
+
+.scene.active .photo-frame {
+  animation: develop 2.2s ease 1.5s backwards;
+}
+
+/* Opcional: JS puede añadir .turning a .album-page al cambiar de foto */
+.album-page.turning {
+  transform-origin: 0 50%;
+  animation: page-turn 0.8s var(--al-ease-io);
+}
+
+/* --------------------------------------------------------------------------
+   Carta
+   -------------------------------------------------------------------------- */
+.scene.active .letter-content > .letter {
+  animation: letter-unfold 1.8s var(--al-ease) 0.7s backwards;
+}
+
+/* --------------------------------------------------------------------------
+   Cofre
+   Reposo: flota y respira luz · Hover: la tapa se entreabre
+   Abierto (.active / aria-expanded): cerradura, tapa, luz interior y
+   resplandor sobre la escena, en unos 3 segundos.
+   -------------------------------------------------------------------------- */
+@keyframes lid-open {
+  /* sin 0%: arranca desde la pose actual (reposo o hover) */
+  55%  { transform: perspective(700px) rotateX(-153deg); }
+  78%  { transform: perspective(700px) rotateX(-136deg); }
+  100% { transform: perspective(700px) rotateX(-142deg); }
+}
+
+@keyframes lock-release {
+  0%   { rotate: 0deg; }
+  25%  { rotate: -9deg; }
+  50%  { rotate: 7deg; }
+  70%  { rotate: -3deg; opacity: 1; translate: -50% -50%; }
+  100% { rotate: 0deg; opacity: 0; translate: -50% 20%; scale: 0.7; }
+}
+
+@keyframes chest-bloom {
+  0%   { opacity: 0; }
+  60%  { opacity: 0.55; }
+  100% { opacity: 0.8; }
+}
+
+.chest-lid { transition: transform 0.9s var(--al-ease); }
+.chest-inner::before { transition: opacity 0.9s var(--al-ease); }
+.chest-glow { transition: opacity 2.6s var(--al-ease) 0.6s, scale 2.8s var(--al-ease) 0.6s; }
+.chest-body i { transition: text-shadow 2s var(--al-ease) 0.8s, scale 2s var(--al-ease) 0.8s; }
+
+/* Reposo: entra con la escena y flota suavemente */
+.scene.active .chest-content > .chest {
+  animation: rise 1.2s var(--al-ease) var(--d, 0s) backwards,
+             chest-float 5.5s ease-in-out calc(var(--d, 0s) + 1.3s) infinite;
+}
+
+.scene.active .chest:not(.active):not([aria-expanded="true"]) .chest-glow {
+  animation: glow-breathe 4.5s ease-in-out infinite;
+}
+
+.scene.active .chest:not(.active):not([aria-expanded="true"]) .chest-lid::after {
+  animation: seam-pulse 3.2s ease-in-out infinite;
+}
+
+/* Hover: la tapa se levanta y se asoma la luz */
+@media (hover: hover) {
+  .chest:not(.active):not([aria-expanded="true"]):hover .chest-lid {
+    transform: perspective(700px) translateY(-10%) rotateX(-14deg);
+  }
+  .chest:not(.active):not([aria-expanded="true"]):hover .chest-inner::before { opacity: 0.6; }
+  .chest:not(.active):not([aria-expanded="true"]):hover .chest-lid::after { opacity: 1; }
+}
+
+/* Abierto */
+.chest.active .chest-lock,
+.chest[aria-expanded="true"] .chest-lock {
+  animation: lock-release 0.95s var(--al-ease) forwards;
+}
+
+.chest.active .chest-lid,
+.chest[aria-expanded="true"] .chest-lid {
+  animation: lid-open 1.9s cubic-bezier(0.4, 0, 0.2, 1) 0.55s forwards;
+}
+
+.chest.active .chest-lid::after,
+.chest[aria-expanded="true"] .chest-lid::after { opacity: 0.9; }
+
+.chest.active .chest-inner::before,
+.chest[aria-expanded="true"] .chest-inner::before {
+  opacity: 1;
+  transition: opacity 2.4s var(--al-ease) 0.6s;
+}
+
+.chest.active .chest-glow,
+.chest[aria-expanded="true"] .chest-glow {
+  opacity: 0.9;
+  scale: 1;
+  animation: ray-spin 18s linear 0.6s infinite;
+}
+
+.chest.active .chest-body i,
+.chest[aria-expanded="true"] .chest-body i {
+  scale: 1.2;
+  text-shadow: 0 0 22px rgba(213, 173, 114, 0.95);
+}
+
+/* Resplandor dorado sobre la escena mientras se abre */
+.scene:has(.chest.active)::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(ellipse 60% 55% at 50% 52%,
+    rgba(255, 226, 160, 0.5), rgba(213, 173, 114, 0.18) 45%, transparent 75%);
+  animation: chest-bloom 3s var(--al-ease) 0.5s both;
+}
+
+/* --------------------------------------------------------------------------
+   Final
+   -------------------------------------------------------------------------- */
+@keyframes aura-breathe {
+  0%, 100% { opacity: 0.7; scale: 1; }
+  50%      { opacity: 1;   scale: 1.06; }
+}
+
+.scene.active .final-content::before {
+  animation: aura-breathe 7s ease-in-out infinite;
+}
+
+.scene.active .final-sparkle {
+  animation: rise 1.2s var(--al-ease) var(--d, 0s) backwards,
+             twinkle 3.2s ease-in-out 2.5s infinite;
+}
+
+.scene.active .final-content > .gold-button {
+  animation: rise 1.2s var(--al-ease) var(--d, 0s) backwards,
+             button-glow 4.5s ease-in-out 3.5s infinite;
+}
+
+/* --------------------------------------------------------------------------
+   Modal (entrada y volteo de la tarjeta)
+   -------------------------------------------------------------------------- */
+.modal-flip {
+  transition: transform 1.3s var(--al-ease-io),
+              translate 0.9s var(--al-ease),
+              scale 0.9s var(--al-ease);
+}
+
+.modal:not(.active) .modal-flip {
+  translate: 0 24px;
+  scale: 0.96;
+}
+
+.modal.active .modal-star {
+  animation: star-spin 1.6s var(--al-ease) 0.2s backwards,
+             twinkle 4s ease-in-out 1.8s infinite;
+}
+
+.modal.active .modal-card > :not(.modal-close):not(.modal-star) {
+  animation: rise 1s var(--al-ease) 0.35s backwards;
+}
+
+/* --------------------------------------------------------------------------
+   Accesibilidad: movimiento reducido
+   (solo afecta a mis bloques; las flores conservan sus propias animaciones)
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .entry, .entry *,
+  .topbar, .topbar *,
+  #experience, #experience *, #experience *::before, #experience *::after,
+  .scene-nav, .scene-nav *,
+  .progress, .progress *,
+  .modal, .modal *,
+  .gold-button::before, .gold-button::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+}

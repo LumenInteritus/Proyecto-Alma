@@ -1,0 +1,603 @@
+/* ==========================================================================
+   MAIN.CSS · Un jardín entre recuerdos · Alma
+   Tokens, base, componentes compartidos, entrada, barra superior y navegación.
+   Todo está acotado: no toca .flower-*, .ground, #hearts-canvas ni .romantic-overlay.
+   ========================================================================== */
+
+:root {
+  /* Paleta oficial */
+  --al-black: #080306;
+  --al-wine: #210610;
+  --al-crimson: #650D29;
+  --al-gold: #D5AD72;
+  --al-ivory: #F2E7DF;
+
+  /* Derivados */
+  --al-gold-deep: #A67C45;
+  --al-gold-light: #E9D2A6;
+  --al-gold-line: rgba(213, 173, 114, 0.55);
+  --al-gold-faint: rgba(213, 173, 114, 0.22);
+  --al-ivory-soft: rgba(242, 231, 223, 0.82);
+  --al-ivory-dim: rgba(242, 231, 223, 0.55);
+  --al-paper: #E9DCC8;
+  --al-ink: #3B2318;
+
+  /* Tipografías (cargadas desde tu HTML) */
+  --al-font-display: 'Cinzel Decorative', 'Trajan Pro', Georgia, serif;
+  --al-font-script: 'Great Vibes', 'Brush Script MT', cursive;
+  --al-font-ui: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --al-font-serif: 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+
+  /* Movimiento */
+  --al-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --al-ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* Capas */
+  --al-z-scene: 10;
+  --al-z-ui: 40;
+  --al-z-entry: 60;
+  --al-z-modal: 80;
+
+  --al-safe-top: env(safe-area-inset-top, 0px);
+  --al-safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* --------------------------------------------------------------------------
+   Base (solo tipografía y color; no se toca el layout del body de flowers.css)
+   -------------------------------------------------------------------------- */
+body {
+  font-family: var(--al-font-ui);
+  color: var(--al-ivory);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* box-sizing acotado a mis bloques */
+.entry, .entry *,
+.topbar, .topbar *,
+#experience, #experience *,
+.scene-nav, .scene-nav *,
+.progress, .progress *,
+.modal, .modal * {
+  box-sizing: border-box;
+}
+
+.entry ::selection,
+#experience ::selection,
+.modal ::selection {
+  background: rgba(213, 173, 114, 0.35);
+  color: var(--al-ivory);
+}
+
+/* --------------------------------------------------------------------------
+   Reset de botones propios
+   -------------------------------------------------------------------------- */
+.gold-button,
+.music-btn,
+.scene-nav button,
+.album-arrow,
+.chest,
+.modal-close {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: center;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.gold-button:focus-visible,
+.music-btn:focus-visible,
+.scene-nav button:focus-visible,
+.album-arrow:focus-visible,
+.chest:focus-visible,
+.modal-close:focus-visible,
+#sceneDots > *:focus-visible {
+  outline: 2px solid var(--al-gold);
+  outline-offset: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   Textos compartidos
+   -------------------------------------------------------------------------- */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  max-width: 100%;
+  margin: 0 0 1.1rem;
+  font-family: var(--al-font-ui);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.7;
+  color: var(--al-gold);
+}
+
+.eyebrow::before,
+.eyebrow::after {
+  content: "";
+  flex: 0 0 auto;
+  width: 2.2rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--al-gold-line));
+}
+
+.eyebrow::after {
+  background: linear-gradient(270deg, transparent, var(--al-gold-line));
+}
+
+.lead {
+  max-width: 34rem;
+  margin: 0 auto 2rem;
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
+  font-weight: 300;
+  line-height: 1.85;
+  color: var(--al-ivory-soft);
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.7);
+}
+
+.scene-intro {
+  max-width: 32rem;
+  margin: 0 auto 1.6rem;
+  font-size: clamp(0.95rem, 1.4vw, 1.08rem);
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--al-ivory-soft);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.7);
+}
+
+.tiny-note {
+  max-width: 30rem;
+  margin: 1.1rem auto 0;
+  font-size: 0.76rem;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  line-height: 1.7;
+  color: var(--al-ivory-dim);
+}
+
+.tiny-note code {
+  padding: 0.12em 0.5em;
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  font-size: 0.92em;
+  color: var(--al-gold);
+  background: rgba(213, 173, 114, 0.1);
+  border: 1px solid var(--al-gold-faint);
+  border-radius: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   Botón dorado
+   -------------------------------------------------------------------------- */
+.gold-button {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  max-width: 100%;
+  min-height: 3.25rem;
+  padding: 1rem 2.2rem;
+  font-family: var(--al-font-ui);
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  line-height: 1.5;
+  text-transform: uppercase;
+  white-space: normal;
+  color: var(--al-ivory);
+  background: linear-gradient(180deg, rgba(101, 13, 41, 0.6), rgba(33, 6, 16, 0.85));
+  border: 1px solid var(--al-gold-line);
+  border-radius: 999px;
+  box-shadow:
+    0 0 0 4px rgba(213, 173, 114, 0.06),
+    0 12px 32px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(242, 231, 223, 0.14);
+  overflow: hidden;
+  transition: color 0.5s var(--al-ease), border-color 0.5s var(--al-ease),
+              box-shadow 0.5s var(--al-ease), transform 0.5s var(--al-ease);
+}
+
+.gold-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(115deg, #A67C45 0%, #D5AD72 42%, #E9D2A6 58%, #B98B50 100%);
+  opacity: 0;
+  transition: opacity 0.5s var(--al-ease);
+}
+
+.gold-button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(242, 231, 223, 0.3), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.9s var(--al-ease);
+  pointer-events: none;
+}
+
+.gold-button span {
+  display: inline-block;
+  font-size: 1.05em;
+  letter-spacing: 0;
+  transition: transform 0.5s var(--al-ease);
+}
+
+@media (hover: hover) {
+  .gold-button:hover {
+    color: var(--al-black);
+    border-color: var(--al-gold);
+    transform: translateY(-2px);
+    box-shadow:
+      0 0 0 4px rgba(213, 173, 114, 0.12),
+      0 16px 40px rgba(0, 0, 0, 0.6),
+      0 0 30px rgba(213, 173, 114, 0.3);
+  }
+  .gold-button:hover::before { opacity: 1; }
+  .gold-button:hover::after { left: 130%; }
+  .gold-button:hover span { transform: translateX(3px); }
+}
+
+.gold-button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* --------------------------------------------------------------------------
+   Pantalla de entrada
+   Estado: visible por defecto. Para cerrarla, JS debe poner el atributo
+   `hidden` (entry.hidden = true) o quitarla del DOM.
+   -------------------------------------------------------------------------- */
+.entry {
+  position: fixed;
+  inset: 0;
+  z-index: var(--al-z-entry);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  justify-content: safe center;
+  padding: calc(2rem + var(--al-safe-top)) 1.5rem calc(4.5rem + var(--al-safe-bottom));
+  text-align: center;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background:
+    radial-gradient(ellipse 62% 56% at 50% 44%, rgba(8, 3, 6, 0.66) 0%, rgba(8, 3, 6, 0.3) 62%, transparent 100%),
+    radial-gradient(ellipse at 50% 50%, transparent 38%, rgba(8, 3, 6, 0.82) 100%);
+}
+
+/* Cerrada: se mantiene en el layout para poder desvanecerse */
+.entry[hidden] {
+  display: flex;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.entry-stars {
+  margin-bottom: 1.6rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  white-space: nowrap;
+  color: var(--al-gold);
+  opacity: 0.8;
+}
+
+.entry .eyebrow {
+  margin-bottom: 0.4rem;
+}
+
+.entry h1 {
+  margin: 0.2rem 0 1rem;
+  padding-left: 0.14em;
+  font-family: var(--al-font-display);
+  font-weight: 400;
+  font-size: clamp(3.6rem, min(15vw, 24vh), 10.5rem);
+  line-height: 1.05;
+  letter-spacing: 0.14em;
+  background: linear-gradient(100deg, #B98B50 0%, #D5AD72 30%, #F2E7DF 50%, #D5AD72 70%, #B98B50 100%);
+  background-size: 300% 100%;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 6px 30px rgba(0, 0, 0, 0.65));
+}
+
+.entry-sub {
+  max-width: 30rem;
+  margin: 0 0 2.4rem;
+  font-family: var(--al-font-script);
+  font-size: clamp(1.45rem, 3.2vw, 2.1rem);
+  line-height: 1.4;
+  color: var(--al-ivory-soft);
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8);
+}
+
+.entry-foot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(1.6rem + var(--al-safe-bottom));
+  padding: 0 1rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.42em;
+  text-align: center;
+  color: rgba(242, 231, 223, 0.42);
+}
+
+/* --------------------------------------------------------------------------
+   Mientras la entrada está visible, el resto de la experiencia espera
+   -------------------------------------------------------------------------- */
+.entry:not([hidden]) ~ #experience {
+  display: none;
+}
+
+.entry:not([hidden]) ~ .topbar,
+.entry:not([hidden]) ~ .scene-nav,
+.entry:not([hidden]) ~ .progress {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.entry:not([hidden]) ~ .topbar { translate: 0 -12px; }
+.entry:not([hidden]) ~ .scene-nav { translate: 14px 0; }
+.entry:not([hidden]) ~ .progress { translate: 0 6px; }
+
+/* --------------------------------------------------------------------------
+   Barra superior
+   -------------------------------------------------------------------------- */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--al-z-ui);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: calc(1rem + var(--al-safe-top)) clamp(1rem, 3vw, 2.5rem) 1.6rem;
+  background: linear-gradient(180deg, rgba(8, 3, 6, 0.88), rgba(8, 3, 6, 0));
+  pointer-events: none;
+}
+
+.topbar > * { pointer-events: auto; }
+
+.brand {
+  font-family: var(--al-font-display);
+  font-size: 0.78rem;
+  letter-spacing: 0.34em;
+  color: var(--al-gold);
+  text-shadow: 0 0 18px rgba(213, 173, 114, 0.25);
+  white-space: nowrap;
+}
+
+.music-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.6rem 1.05rem;
+  font-family: var(--al-font-ui);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--al-gold);
+  background: rgba(8, 3, 6, 0.6);
+  border: 1px solid var(--al-gold-faint);
+  border-radius: 999px;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  transition: color 0.5s var(--al-ease), border-color 0.5s var(--al-ease),
+              background 0.5s var(--al-ease), box-shadow 0.5s var(--al-ease);
+}
+
+@media (hover: hover) {
+  .music-btn:hover {
+    color: var(--al-ivory);
+    border-color: var(--al-gold-line);
+    background: rgba(101, 13, 41, 0.5);
+  }
+}
+
+/* Estado "sonando": clase .active o aria-pressed="true" */
+.music-btn.active,
+.music-btn[aria-pressed="true"] {
+  color: var(--al-ivory);
+  border-color: var(--al-gold-line);
+  background: rgba(101, 13, 41, 0.55);
+  box-shadow: 0 0 22px rgba(213, 173, 114, 0.22);
+}
+
+/* --------------------------------------------------------------------------
+   Navegación de escenas (columna vertical a la derecha en escritorio)
+   -------------------------------------------------------------------------- */
+.scene-nav {
+  position: fixed;
+  z-index: var(--al-z-ui);
+  top: 50%;
+  right: clamp(0.8rem, 2.2vw, 2rem);
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+#prevScene,
+#nextScene {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  font-size: 1.05rem;
+  line-height: 1;
+  color: var(--al-gold);
+  background: rgba(8, 3, 6, 0.6);
+  border: 1px solid var(--al-gold-faint);
+  border-radius: 50%;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  transition: color 0.5s var(--al-ease), background 0.5s var(--al-ease),
+              border-color 0.5s var(--al-ease), box-shadow 0.5s var(--al-ease),
+              opacity 0.5s var(--al-ease);
+}
+
+@media (hover: hover) {
+  #prevScene:hover,
+  #nextScene:hover {
+    color: var(--al-black);
+    background: var(--al-gold);
+    border-color: var(--al-gold);
+    box-shadow: 0 0 22px rgba(213, 173, 114, 0.45);
+  }
+}
+
+#prevScene:disabled,
+#nextScene:disabled {
+  opacity: 0.28;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Los puntos los genera JS dentro de #sceneDots (cualquier hijo directo) */
+#sceneDots {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+#sceneDots > * {
+  position: relative;
+  display: block;
+  width: 0.5rem;
+  height: 0.5rem;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--al-gold-line);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.6s var(--al-ease), transform 0.6s var(--al-ease),
+              box-shadow 0.6s var(--al-ease), border-color 0.6s var(--al-ease);
+}
+
+/* Área táctil ampliada */
+#sceneDots > *::after {
+  content: "";
+  position: absolute;
+  inset: -0.6rem;
+}
+
+#sceneDots > .active,
+#sceneDots > [aria-current="true"],
+#sceneDots > [aria-selected="true"] {
+  background: var(--al-gold);
+  border-color: var(--al-gold);
+  transform: scale(1.5);
+  box-shadow: 0 0 12px rgba(213, 173, 114, 0.7);
+}
+
+/* --------------------------------------------------------------------------
+   Barra de progreso
+   JS debe asignar el ancho: progressBar.style.width = '16.6%'
+   -------------------------------------------------------------------------- */
+.progress {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--al-z-ui);
+  height: 2px;
+  background: rgba(213, 173, 114, 0.1);
+  pointer-events: none;
+}
+
+#progressBar {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(213, 173, 114, 0), var(--al-gold));
+  box-shadow: 0 0 14px rgba(213, 173, 114, 0.65);
+  transition: width 1s var(--al-ease);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 720px) {
+  .topbar { padding-bottom: 1.2rem; }
+  .brand { font-size: 0.68rem; letter-spacing: 0.26em; }
+  .music-btn { padding: 0.55rem 0.9rem; font-size: 0.62rem; }
+
+  /* Navegación horizontal abajo, centrada */
+  .scene-nav {
+    top: auto;
+    bottom: calc(1rem + var(--al-safe-bottom));
+    left: 0;
+    right: 0;
+    width: fit-content;
+    margin: 0 auto;
+    transform: none;
+    flex-direction: row;
+    gap: 1rem;
+    padding: 0.35rem 0.5rem;
+    background: rgba(8, 3, 6, 0.5);
+    border: 1px solid var(--al-gold-faint);
+    border-radius: 999px;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+
+  #prevScene,
+  #nextScene {
+    width: 2.3rem;
+    height: 2.3rem;
+    rotate: -90deg; /* ↑ pasa a ←  y ↓ pasa a → */
+    border-color: transparent;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  #sceneDots { flex-direction: row; gap: 0.8rem; }
+
+  .entry-stars { font-size: 0.75rem; }
+}
+
+@media (max-width: 480px) {
+  .eyebrow { font-size: 0.64rem; letter-spacing: 0.26em; gap: 0.6rem; }
+  .eyebrow::before,
+  .eyebrow::after { display: none; }
+  .music-btn span { display: none; }
+  .gold-button { padding: 0.95rem 1.5rem; font-size: 0.7rem; letter-spacing: 0.16em; }
+  .entry-foot { letter-spacing: 0.28em; font-size: 0.56rem; }
+}
+
+@media (max-height: 560px) {
+  .entry { padding-top: calc(1.2rem + var(--al-safe-top)); padding-bottom: 1.2rem; }
+  .entry-stars,
+  .entry-foot { display: none; }
+  .entry-sub { margin-bottom: 1.4rem; }
+}

@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#080306">
+  <title>Un jardín entre recuerdos · Alma</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Great+Vibes&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/flowers.css">
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/scenes.css">
+<link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+  <canvas id="hearts-canvas" aria-hidden="true"></canvas><div class="romantic-overlay"></div>
+  <div class="ground" aria-hidden="true">
+    <div class="flower-container"></div><div class="flower-container"></div><div class="flower-container"></div><div class="flower-container"></div>
+    <div class="flower-container"></div><div class="flower-container"></div><div class="flower-container"></div><div class="flower-container"></div>
+    <div class="flower-container"></div><div class="flower-container"></div><div class="flower-container"></div><div class="flower-container"></div>
+  </div>
+
+  <div class="entry" id="entry">
+    <div class="entry-stars">✦　　·　　✧　　 ·　　✦</div>
+    <p class="eyebrow">UNA PEQUEÑA SORPRESA PARA</p>
+    <h1>Alma</h1>
+    <p class="entry-sub">Hay lugares que guardan flores.<br>Este guarda pequeños recuerdos.</p>
+    <button class="gold-button" id="enterBtn">Entrar al jardín <span>✧</span></button>
+    <span class="entry-foot">UNA EXPERIENCIA HECHA CON CARIÑO</span>
+  </div>
+
+  <header class="topbar"><span class="brand">✧ PARA ALMA</span><button id="musicBtn" class="music-btn" aria-label="Activar música">♫ <span>Música</span></button></header>
+  <main id="experience" aria-live="polite">
+    <section class="scene active" data-scene="0">
+      <div class="scene-content welcome-content">
+        <p class="eyebrow">BIENVENIDA A ESTE PEQUEÑO UNIVERSO</p><h2>Un jardín<br><em>entre recuerdos</em></h2>
+        <p class="lead">No todos los días se encuentra un lugar hecho para celebrar a alguien.</p>
+        <button class="gold-button next-btn">Descubrir lo que hay aquí <span>→</span></button>
+      </div>
+      <div class="scene-number">01 <i>—</i> 06</div>
+    </section>
+
+    <section class="scene" data-scene="1">
+      <div class="scene-content wide-content">
+        <p class="eyebrow">CAPÍTULO I · MOMENTOS</p><h2>Un álbum de <em>instantes</em></h2>
+        <p class="scene-intro">Algunos recuerdos merecen quedarse en una página especial.</p>
+        <div class="album" id="album">
+          <button class="album-arrow prev-photo" aria-label="Foto anterior">‹</button>
+          <div class="album-page"><div class="photo-frame"><img id="albumImage" src="" alt="Fotografía para el álbum"><div id="photoPlaceholder" class="photo-placeholder"><span>✧</span><b>Tu fotografía aquí</b><small>Agrega imágenes en assets/images</small></div></div><div class="photo-caption" id="photoCaption">Un recuerdo por colocar</div><div class="page-mark" id="pageMark">01 / 06</div></div>
+          <button class="album-arrow next-photo" aria-label="Foto siguiente">›</button>
+        </div>
+      </div><div class="scene-number">02 <i>—</i> 06</div>
+    </section>
+
+    <section class="scene" data-scene="2">
+      <div class="scene-content video-content"><p class="eyebrow">CAPÍTULO II · UN MOMENTO</p><h2>Un recuerdo <em>en movimiento</em></h2>
+        <div class="video-frame"><video id="memoryVideo" controls playsinline preload="metadata"><source src="assets/video/1.v.mp4" type="video/mp4">Tu navegador no puede reproducir este video.</video><div class="media-placeholder" id="videoPlaceholder"><span>▶</span><b>Aquí irá el video</b><small>Coloca tu archivo en assets/video/1.v.mp4</small></div></div>
+      </div><div class="scene-number">03 <i>—</i> 06</div>
+    </section>
+
+    <section class="scene" data-scene="3">
+      <div class="scene-content letter-content"><p class="eyebrow">CAPÍTULO III · UNAS PALABRAS</p><h2>Para <em>ti, Alma</em></h2>
+        <article class="letter"><div class="letter-ornament">✧</div><p id="dedicationText">Hoy es un día para celebrar que existes y todo lo bonito que todavía te espera. Ojalá este nuevo año esté lleno de momentos que te hagan reír, personas que te quieran bonito y razones para seguir descubriendo cosas nuevas. Gracias por compartir un poquito de tu mundo. Feliz cumpleaños, Alma.</p><span>Con cariño,</span><b>—</b></article>
+      </div><div class="scene-number">04 <i>—</i> 06</div>
+    </section>
+
+    <section class="scene" data-scene="4">
+      <div class="scene-content chest-content"><p class="eyebrow">CAPÍTULO IV · UN PEQUEÑO MISTERIO</p><h2>Hay algo <em>esperándote</em></h2><p class="lead">No todo lo bonito se encuentra a simple vista.</p>
+        <button class="chest" id="chestBtn" aria-label="Abrir el cofre"><span class="chest-glow"></span><span class="chest-inner"></span><span class="chest-body"><i>✧</i></span><span class="chest-lid"></span><span class="chest-hinge chest-hinge-l"></span><span class="chest-hinge chest-hinge-r"></span><span class="chest-lock">◇</span></button><p class="tiny-note">Toca el cofre para descubrir la sorpresa.</p>
+      </div><div class="scene-number">05 <i>—</i> 06</div>
+    </section>
+
+    <section class="scene" data-scene="5">
+      <div class="scene-content final-content"><p class="eyebrow">Y POR ÚLTIMO...</p><h2>¡Feliz cumpleaños,<br><em>Alma!</em></h2><p class="lead">Que la vida te regale muchísimos motivos para sonreír y que nunca te falten sueños por cumplir.</p><p class="final-note">Te adoro mucho mugrosa</p><p class="final-note-sub">Eres increíble</p><div class="final-sparkle">✦　✧　✦</div><button class="gold-button" id="restartBtn">Volver a recorrer el jardín ↺</button></div><div class="scene-number">06 <i>—</i> 06</div>
+    </section>
+  </main>
+
+  <nav class="scene-nav" aria-label="Navegación de escenas"><button id="prevScene" aria-label="Escena anterior">↑</button><div id="sceneDots"></div><button id="nextScene" aria-label="Siguiente escena">↓</button></nav>
+  <div class="progress"><span id="progressBar"></span></div>
+  <div class="modal" id="surpriseModal" role="dialog" aria-modal="true" aria-labelledby="surpriseTitle">
+  <div class="modal-stage">
+    <button class="modal-close" id="closeSurprise" aria-label="Cerrar">×</button>
+    <div class="modal-flip" id="modalFlip">
+
+      <!-- Cara frontal: el deseo -->
+      <div class="modal-card modal-front">
+        <div class="modal-star">✧</div>
+        <p class="eyebrow">UNA SORPRESA PARA TI</p>
+        <h2 id="surpriseTitle">Un deseo para <em>Alma</em></h2>
+        <p>Que nunca pierdas esa forma tan tuya de encontrar algo especial en los días normales. Este pequeño cofre guarda un deseo: que este nuevo capítulo de tu vida sea extraordinario.</p>
+        <button class="gold-button" id="modalContinue">Seguir <span>→</span></button>
+      </div>
+
+      <!-- Cara trasera: el QR de la playlist -->
+      <div class="modal-card modal-back" aria-hidden="true" inert>
+        <div class="modal-star">♫</div>
+        <p class="eyebrow">UNA PLAYLIST PARA TI</p>
+        <h2>Música para <em>Alma</em></h2>
+        <p>Hay canciones que también guardan recuerdos. Escanea el código con la cámara de tu celular y escúchalas en Spotify.</p>
+        <div class="qr-box" id="qrBox">
+          <img id="playlistQr" src="assets/images/qr-playlist.png" alt="Código QR para abrir la playlist en Spotify">
+          <span class="qr-missing">Coloca tu QR en<br>assets/images/qr-playlist.png</span>
+        </div>
+        <a class="qr-link" id="playlistLink" href="https://open.spotify.com/playlist/5vHo4kCaJ0Um2HcGQECYbp" target="_blank" rel="noopener noreferrer">Abrir en Spotify ↗</a>
+        <button class="gold-button" id="modalFinish">Seguir <span>→</span></button>
+      </div>
+
+    </div>
+  </div>
+</div>
+  <audio id="backgroundMusic" loop preload="none"><source src="assets/music/cancion.mp3" type="audio/mpeg"></audio>
+ <script src="js/flowers.js"></script>
+<script src="js/scenes.js"></script>
+<script src="js/main.js"></script>
+</body></html>
